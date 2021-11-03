@@ -1,0 +1,11 @@
+--- a/mk/nvidia-modprobe.mk  2021-07-25 09:25:03.857882583 -0700
++++ b/mk/nvidia-modprobe.mk  2021-07-25 09:25:29.586139143 -0700
+@@ -6,7 +6,7 @@
+
+ ##### Source definitions #####
+
+-VERSION        := 450.57
++VERSION        := 470.63.01
+ PREFIX         := nvidia-modprobe-$(VERSION)
+ URL            := https://github.com/NVIDIA/nvidia-modprobe/archive/$(VERSION).tar.gz
+

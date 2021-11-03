@@ -1,0 +1,27 @@
+# Template file for 'nvidia-container-runtime'
+pkgname=nvidia-container-runtime
+version=3.5.0
+revision=1
+archs="x86_64"
+hostmakedepends="go"
+makedepends="libseccomp-devel"
+depends="libseccomp nvidia-container-toolkit"
+short_desc="Modified version of runc adding a custom pre-start hook"
+maintainer="Quentin Freimanis <quentinfreimanis@gmail.com>"
+license="Apache-2.0"
+homepage="https://github.com/NVIDIA/nvidia-container-runtime/"
+distfiles="https://github.com/NVIDIA/nvidia-container-runtime/archive/v${version}.tar.gz"
+checksum="4985efe4488e441d0e4910cc7eb2046176db063e5bbe2e0542a7c08d5c5e7d34"
+
+pre_build() {
+	mkdir -p .gopath/src
+	ln -rTsf $PWD/src .gopath/src/${pkgname}
+}
+
+do_build() {
+	make build
+}
+
+do_install() {
+	vbin nvidia-container-runtime
+}

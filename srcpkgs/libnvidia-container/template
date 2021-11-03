@@ -1,0 +1,38 @@
+# Template file for 'libnvidia-container'
+pkgname=libnvidia-container
+version=1.5.1
+revision=1
+archs="x86_64"
+hostmakedepends="tar xz curl bmake groff m4 pkg-config which"
+makedepends="rpcsvc-proto libcap-devel libseccomp-devel libtirpc-devel"
+short_desc="NVIDIA container runtime library"
+maintainer="Quentin Freimanis <quentinfreimanis@gmail.com>"
+license="Apache-2.0"
+homepage="https://github.com/NVIDIA/libnvidia-container"
+distfiles="https://github.com/NVIDIA/libnvidia-container/archive/v${version}.tar.gz"
+checksum=b12e1190df03875547628a776f97efe478fac77aa31a0fadfbea10df3bc2dc8d
+
+do_build() {
+	make dist prefix=/usr REVISION=${version}
+}
+
+pre_install() {
+	cd dist
+	tar xvf ${pkgname}_${version}_${archs}.tar.xz
+}
+
+do_install() {
+	vinstall dist/${pkgname}_${version}/usr/lib/${pkgname}.so.${version} 755 /usr/lib/ ${pkgname}.so.1
+
+	vbin dist/${pkgname}_${version}/usr/bin/nvidia-container-cli
+}
+
+libnvidia-container-devel_package() {
+	short_desc+=" - development files"
+	depends="${sourcepkg}>=${version}_${revision}"
+	pkg_install() {
+		vinstall dist/${sourcepkg}_${version}/usr/lib/${sourcepkg}.a 644 /usr/lib/
+		vinstall dist/${sourcepkg}_${version}/usr/include/nvc.h 644 /usr/include/
+		vinstall dist/${sourcepkg}_${version}/usr/lib/pkgconfig/${sourcepkg}.pc 644 /usr/lib/pkgconfig/
+	}
+}

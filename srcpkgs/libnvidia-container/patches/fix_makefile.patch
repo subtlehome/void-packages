@@ -1,0 +1,21 @@
+--- a/Makefile  2021-07-25 09:30:29.172126492 -0700
++++ b/Makefile  2021-07-25 10:30:39.601936591 -0700
+@@ -23,7 +23,7 @@
+ 
+ ##### Global definitions #####
+ 
+-export prefix      = /usr/local
++export prefix      = /usr
+ export exec_prefix = $(prefix)
+ export bindir      = $(exec_prefix)/bin
+ export libdir      = $(exec_prefix)/lib
+@@ -123,7 +123,8 @@
+             -Wall -Wextra -Wcast-align -Wpointer-arith -Wmissing-prototypes -Wnonnull \
+             -Wwrite-strings -Wlogical-op -Wformat=2 -Wmissing-format-attribute -Winit-self -Wshadow \
+             -Wstrict-prototypes -Wunreachable-code -Wconversion -Wsign-conversion \
+-            -Wno-unknown-warning-option -Wno-format-extra-args -Wno-gnu-alignof-expression $(CFLAGS)
++            -Wno-unknown-warning-option -Wno-format-extra-args -Wno-gnu-alignof-expression \
++            -I/usr/include/tirpc -ltirpc $(CFLAGS)
+ LDFLAGS  := -Wl,-zrelro -Wl,-znow -Wl,-zdefs -Wl,--gc-sections $(LDFLAGS)
+ LDLIBS   := $(LDLIBS)
+ 

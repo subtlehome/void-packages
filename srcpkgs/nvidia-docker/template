@@ -1,0 +1,22 @@
+# Template file for 'nvidia-docker'
+pkgname=nvidia-docker
+version=2.6.0
+revision=1
+archs="x86_64"
+wrksrc="${pkgname}-${version}"
+depends="nvidia-container-toolkit libnvidia-container nvidia-container-runtime docker"
+short_desc="Build and run Docker containers leveraging NVIDIA GPUs"
+maintainer="Quentin Freimanis <quentinfreimanis@gmail.com>"
+license="Apache-2.0"
+homepage="https://github.com/NVIDIA/nvidia-docker"
+distfiles="https://github.com/NVIDIA/nvidia-docker/archive/v${version}.tar.gz"
+checksum="a2f41b91770e45d3f7e6d361be720573a20e88ea33d4f8c7984b6b0cfdc57214"
+
+pre_install() {
+	vsed -i nvidia-docker -e "s;@VERSION@;${version};"
+}
+
+do_install() {
+	vbin nvidia-docker
+	vinstall daemon.json 644 /etc/docker
+}
